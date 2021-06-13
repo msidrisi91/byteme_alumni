@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% if user.profile.role == "College" %}
+<div class="content-section">
+    <form method="GET">
+        {{ filter.form|crispy }}
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+{% for profile in filter.qs%}
+
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ profile.image.url }}">
+    <div class="media-body">
+        <h2 class="article-title">{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
+    </div>
+    <form>
+        <button class="btn btn-outline-info" type="submit"
+                formaction="{% url 'user-detail' profile.user.id %}">View Details
+        </button>
+    </form>
+</article>
+{% endfor %}
+{% else %}
+<h2 class="article-title">You are not authorized to view this page.</h2>
+{% endif %}
+{% endblock content %}

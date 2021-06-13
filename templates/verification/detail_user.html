@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.profile.role == "College" %}
+
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ object.image.url }}">
+
+    <div class="media-body">
+        <!--
+              <div class="article-metadata">
+                  <div>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'notice-update' object.id %}">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'notice-delete' object.id %}">Delete</a>
+                  </div>
+              </div>
+        -->
+        <h2 class="article-title">{{ object.user.first_name }} {{ object.user.last_name }}</h2>
+        <p class="article-content">Mobile Number: {{ object.mobile_number }}</p>
+        <p class="article-content">Gender: {{ object.get_gender_display }}</p>
+        <p class="article-content">Roll Number: {{ object.roll_number }}</p>
+        <p class="article-content">College: {{ object.get_college_display }}</p>
+        <p class="article-content">Passing Year: {{ object.passing_year }}</p>
+        <p class="article-content">Course: {{ object.course }}</p>
+        <div class="article-metadata">
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'verify' pk=object.pk %}">Verify</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'reject' pk=object.pk %}">Reject</a>
+            </div>
+        </div>
+    </div>
+</article>
+{% else %}
+<h2 class="article-title">You are not authorized to view this page.</h2>
+{% endif %}
+
+{% endblock content %}
